@@ -6,7 +6,7 @@ pipeline {
     environment {
 
     DOCKERHUB_CREDENTIALS = credentials('dockeruser')
-     registry = "mubeen507/frontend-lms"
+     registry = "sivakiran92/jenkins"
         registryCredential = 'dockerhub'
     }
 
@@ -15,7 +15,7 @@ pipeline {
 
         stage('Building the docker image') {
             steps {
-                sh 'cd webapp && docker build -t mubeen507/frontend-lms .'
+                sh 'cd webapp && docker build -t sivakiran92/jenkins .'
             }
         }
         stage('Logging into dockerhub account') {
@@ -25,18 +25,18 @@ pipeline {
         }
         stage('pushing the docker image into dockerhub') {
             steps {
-                  sh 'docker push mubeen507/frontend-lms'
+                  sh 'docker push sivakiran92/jenkins'
             }
         }
         stage('Remove old docker images') {
              steps {
-                 sh 'docker rmi -f mubeen507/frontend-lms'
+                 sh 'docker rmi -f sivakiran92/jenkins'
             }
         }
          stage('Running the docker container') {
             steps {
                   sh 'docker container rm --force fe'
-                  sh 'docker run -dt -p 80:80 --name fe mubeen507/frontend-lms'
+                  sh 'docker run -dt -p 80:80 --name fe sivakiran92/jenkins'
             }
         }
     }
